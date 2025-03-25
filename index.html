@@ -78,10 +78,10 @@
             }
             
             totalReceived = convertedAmount * exchangeRate;
-            
-            document.getElementById('exchangeRate').innerText = `Exchange Rate: 1 USD = ${exchangeRate} VND`;
-            document.getElementById('transactionFee').innerText = `PayPal Fee: $${paypalFee.toFixed(2)}`;
-            document.getElementById('totalReceived').innerText = `Total Received: ${totalReceived.toFixed(2)} VND`;
+
+            document.getElementById('exchangeRate').innerText = `Exchange Rate: 1 USD = ${exchangeRate.toLocaleString()} VND`;
+            document.getElementById('transactionFee').innerText = `PayPal Fee: $${paypalFee.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('totalReceived').innerText = `Total Received: ${totalReceived.toLocaleString()} VND`;
         }
     </script>
 </head>
