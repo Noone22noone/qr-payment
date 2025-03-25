@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: url('https://i.postimg.cc/L5qqg41m/ammie-ngo-vcu-OZBxx-Rk-unsplash-1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        img {
+            width: 200px;
+            margin: 20px 0;
+        }
+        .rate-info, .fee-info {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+            font-size: 16px;
+            text-align: center;
+        }
+        h2 {
+            color: #FFD700;
+        }
+        .badges {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .badge-img {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+    <script>
+        function updateRates() {
+            let amount = parseFloat(document.getElementById('amount').value) || 0;
+            let exchangeRate, paypalFee, totalReceived;
+            
+            let baseExchangeRate = 24500; 
+            let paypalPercentage = 4.4 / 100;
+            let paypalFixedFee = 0.30;
+            let conversionFee = 3.5 / 100;
+            
+            paypalFee = (amount * paypalPercentage) + paypalFixedFee;
+            let netAmount = amount - paypalFee;
+            let convertedAmount = netAmount - (netAmount * conversionFee);
+            
+            if (amount < 1000) {
+                exchangeRate = 24000;
+            } else if (amount < 5000) {
+                exchangeRate = 23900;
+            } else {
+                exchangeRate = 23800;
+            }
+            
+            totalReceived = convertedAmount * exchangeRate;
+            
+            document.getElementById('exchangeRate').innerText = `Exchange Rate: 1 USD = ${exchangeRate} VND`;
+            document.getElementById('transactionFee').innerText = `PayPal Fee: $${paypalFee.toFixed(2)}`;
+            document.getElementById('totalReceived').innerText = `Total Received: ${totalReceived.toFixed(2)} VND`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Scan to Pay</h2>
+        <p>Enter the amount in USD to see the updated exchange rate and fees.</p>
+        
+        <div class="input-container">
+            <input type="number" id="amount" placeholder="Enter amount in USD" oninput="updateRates()">
+        </div>
+        
+        <img src="your-paypal-qr-code.png" alt="PayPal QR Code">
+        
+        <div class="rate-info" id="exchangeRate">Exchange Rate: 1 USD = 24,000 VND</div>
+        <div class="fee-info" id="transactionFee">PayPal Fee: $0.00</div>
+        <div class="fee-info" id="totalReceived">Total Received: 0 VND</div>
+        
+        <div class="badges">
+            <img src="https://i.postimg.cc/0QHVD0cD/668-6685076-100-png.png" alt="Safe & Secure" class="badge-img">
+            <img src="https://i.postimg.cc/J4jfz9Zj/pngtree-trust-seller-badge-star-vector-png-image-7353453.png" alt="Trusted by Customers" class="badge-img">
+        </div>
+        
+        <p>After payment, contact us for cash pickup.</p>
+    </div>
+    <footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 14px; background: rgba(0, 0, 0, 0.5); padding: 5px 0;">
+        &copy; 2025 Khris Tran. All Rights Reserved.
+    </footer>
+</body>
+</html>
